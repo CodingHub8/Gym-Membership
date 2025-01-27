@@ -21,6 +21,7 @@ public abstract class DBGymMembership extends RoomDatabase {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                             DBGymMembership.class, "db_gym_membership")
                     .allowMainThreadQueries()
+                    .setJournalMode(JournalMode.TRUNCATE)
                     .addCallback(prepopulateCallback) // Add callback for pre-population
                     .build();
         }
