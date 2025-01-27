@@ -11,7 +11,6 @@ import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.gym_membership.Models.Payment;
 import com.example.gym_membership.R;
 import com.example.gym_membership.User.*;
 import com.example.gym_membership.User.PaymentProcess;
@@ -48,7 +47,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
             String username = preferences.getString("username", "Guest");  // Default is "Guest"
             boolean isLoggedIn = preferences.getBoolean("isLoggedIn", false);  // Default is false
 
-            if(!username.isEmpty() && isLoggedIn){
+            if(!username.equals("Guest") && isLoggedIn){
                 Intent intent = new Intent(context, PaymentProcess.class);
 
                 // Pass the membership data to the new activity via intent extras
@@ -56,11 +55,13 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
                 intent.putExtra("membershipType", cardModel.getMembershipType());
                 intent.putExtra("price", cardModel.getPrice());
                 intent.putExtra("duration", cardModel.getDuration());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 // Start the new activity
                 context.startActivity(intent);
             } else {
                 Intent intent = new Intent(context, Login.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 Toast.makeText(context, "You must log-in before making a purchase", Toast.LENGTH_SHORT).show();
                 // Start the new activity
                 context.startActivity(intent);

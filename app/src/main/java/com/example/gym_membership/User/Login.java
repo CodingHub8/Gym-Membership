@@ -37,11 +37,9 @@ public class Login extends AppCompatActivity {
         String password = binding.etPassword.getText().toString();
 
         if(username.isEmpty() || password.isEmpty()){
-            binding.etUsername.setText("");
-            binding.etPassword.setText("");
+            Toast.makeText(getApplicationContext(), "Please fill in all credentials", Toast.LENGTH_SHORT).show();
         } else {
             User user = db.userDao().getUserAuthentication(username, password);
-            System.out.println(user.username + user.password);
 
             if (user != null) {
                 Toast.makeText(getApplicationContext(), "Welcome, " + user.username, Toast.LENGTH_SHORT).show();
