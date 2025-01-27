@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="gray">#757575</color>
+    <color name="light_gray">#F5F5F5</color>
+
+    <!-- Primary app colors -->
+    <color name="colorPrimary">#03A9F4</color> <!-- Light Blue -->
+    <color name="colorPrimaryVariant">#0288D1</color> <!-- Darker Light Blue -->
+    <color name="colorOnPrimary">#FFFFFF</color> <!-- Text Color on Primary -->
+
+    <!-- Secondary app colors -->
+    <color name="colorSecondary">#00BCD4</color> <!-- Cyan (optional) -->
+    <color name="colorSecondaryVariant">#0097A7</color> <!-- Dark Cyan -->
+    <color name="colorOnSecondary">#FFFFFF</color> <!-- Text Color on Secondary -->
+
+    <!-- Other colors -->
+    <color name="colorBackground">#FFFFFF</color> <!-- Background color -->
+    <color name="colorSurface">#FFFFFF</color> <!-- Surface color -->
+    <color name="colorError">#B00020</color> <!-- Error color -->
+    <color name="colorOnBackground">#000000</color> <!-- Text color on background -->
+    <color name="colorOnSurface">#000000</color>
+    <color name="colorSuccess">#309932</color> <!-- Text color on surfaces -->
+
+</resources>
