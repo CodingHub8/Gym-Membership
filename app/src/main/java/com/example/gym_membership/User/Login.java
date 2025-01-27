@@ -3,6 +3,7 @@ package com.example.gym_membership.User;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -11,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.gym_membership.Database.DBGymMembership;
 import com.example.gym_membership.Models.User;
 import com.example.gym_membership.databinding.UserActivityLoginBinding;
+
+import java.util.List;
 
 public class Login extends AppCompatActivity {
     UserActivityLoginBinding binding;
@@ -30,6 +33,11 @@ public class Login extends AppCompatActivity {
             binding.etUsername.setText(intent.getStringExtra("username"));
             binding.etPassword.setText(intent.getStringExtra("password"));
         }
+
+        List<User> users = db.userDao().getAllUsers();
+        for (User u : users) {
+            Log.d("DBCheck", "User: " + u.username + ", Password: " + u.password);
+        }
     }
 
     public void login(View view){
@@ -39,7 +47,7 @@ public class Login extends AppCompatActivity {
         if(username.isEmpty() || password.isEmpty()){
             Toast.makeText(getApplicationContext(), "Please fill in all credentials", Toast.LENGTH_SHORT).show();
         } else {
-            User user = db.userDao().getUserAuthentication(username, password);
+            User user = db.userDao().getUserAuthentication(username.trim(), password.trim());
 
             if (user != null) {
                 Toast.makeText(getApplicationContext(), "Welcome, " + user.username, Toast.LENGTH_SHORT).show();
