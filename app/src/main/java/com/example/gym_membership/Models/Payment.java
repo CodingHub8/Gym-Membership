@@ -36,4 +36,29 @@ public class Payment {
         this.expirationDate = expirationDate;
         this.userID = userID;
     }
+
+    public int getPaymentID() {
+        return paymentID;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public double getPaymentAmount() {
+        return paymentAmount;
+    }
+
+    public String getExpirationDate() {
+        return expirationDate;
+    }
+
+    @Nullable
+    public Integer getUserID() {
+        return userID;
+    }
 }
