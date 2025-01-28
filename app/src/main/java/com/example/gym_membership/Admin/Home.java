@@ -8,13 +8,12 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gym_membership.Adapters.AdminApprovalAdapter;
 import com.example.gym_membership.Database.DBGymMembership;
 import com.example.gym_membership.Models.AdminApprovalModel;
 import com.example.gym_membership.Models.Payment;
-import com.example.gym_membership.R;
+import com.example.gym_membership.Models.User;
 import com.example.gym_membership.databinding.AdminActivityHomeBinding;
 
 import java.util.ArrayList;
@@ -36,21 +35,15 @@ public class Home extends AppCompatActivity {
         setContentView(binding.getRoot());
         db = DBGymMembership.getInstance(this); // Access the Room database
 
+        approvalList = new ArrayList<>();
         setupRecyclerView();
         loadPendingApprovals();
     }
 
     private void setupRecyclerView() {
-        RecyclerView membershipApprovalListContainer = findViewById(R.id.membershipApprovalList);
-        membershipApprovalListContainer.setLayoutManager(new LinearLayoutManager(this));
-
-        // Initialize the adapter with an empty list and a click listener
-        adapter = new AdminApprovalAdapter(this, new ArrayList<>(), item -> {
-            // Handle approval logic here
-            approveMembership(item);
-        });
-
-        membershipApprovalListContainer.setAdapter(adapter);
+        adapter = new AdminApprovalAdapter(this, approvalList, item -> approveMembership(item));
+        binding.membershipApprovalList.setLayoutManager(new LinearLayoutManager(this));
+        binding.membershipApprovalList.setAdapter(adapter);
     }
 
     private void loadPendingApprovals() {
@@ -61,38 +54,42 @@ public class Home extends AppCompatActivity {
         } else {
             Log.d("PendingApprovals", "No payments found.");
         }
-        approvalList = new ArrayList<>();
 
+        approvalList.clear(); // Clear the current list to avoid duplication
         for (Payment payment : payments) {
             // Map Payment data to AdminApprovalModel
             AdminApprovalModel model = new AdminApprovalModel(
                     payment.getUsername(),
                     "$" + payment.getPaymentAmount(), // Format amount
                     payment.getExpirationDate()
-
             );
             approvalList.add(model);
         }
-
-        // Update RecyclerView
-        AdminApprovalAdapter adapter = new AdminApprovalAdapter(this, approvalList, item -> {
-            // Handle approval logic here
-        });
 
         Log.d("ApprovalList", "List size before passing to adapter: " + approvalList.size());
         for (AdminApprovalModel model : approvalList) {
             Log.d("ApprovalList", "Item: " + model.getUsername() + ", " + model.getPaymentAmount());
         }
-        // Update the adapter with the approval list
-        adapter.updateApprovalList(approvalList);
-        Log.d("AdapterState", "Adapter list size: " + adapter.getItemCount());
+
+        // Notify adapter of data changes
+        runOnUiThread(() -> adapter.notifyDataSetChanged());
     }
 
     private void approveMembership(AdminApprovalModel item) {
-        // Example logic for approving a membership
-        // This can be customized to update the database or show a confirmation message
+        String name = item.getUsername();
+        User user = db.userDao().getUserByName(name);
+        // Update the user's membership status in the database
+        db.userDao().updateMembershipStatusByUserId(user.userID, "Active");
+
+        // Remove the item from the approval list
+        approvalList.remove(item);
+
+        // Notify the adapter of the item removal
+        runOnUiThread(() -> adapter.notifyDataSetChanged());
+
+        // Show confirmation to the user
         String message = "Approved membership for: " + item.getUsername();
-        // Update UI or notify user
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
 }

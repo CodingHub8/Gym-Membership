@@ -24,6 +24,12 @@ public interface UserDao {
     @Query("UPDATE User SET membershipStatus = :membershipStatus, membershipId = :membershipId WHERE userID = :userID")
     int updateMembershipStatus(int userID, int membershipId, String membershipStatus);
 
+    @Query("UPDATE User SET membershipStatus = :membershipStatus WHERE userID = :userID")
+    int updateMembershipStatusByUserId(int userID, String membershipStatus);
+
+    @Query("SELECT * FROM User WHERE username = :username")
+    User getUserByName(String username);
+
     // Delete all users
     @Query("DELETE FROM User")
     void deleteAll();

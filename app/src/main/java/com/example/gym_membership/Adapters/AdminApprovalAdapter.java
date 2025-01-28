@@ -19,11 +19,13 @@ public class AdminApprovalAdapter extends RecyclerView.Adapter<AdminApprovalAdap
     private final Context context;
     private final List<AdminApprovalModel> approvalList;
     private final OnApprovalClickListener listener;
+    RecyclerView holder;
 
     public AdminApprovalAdapter(Context context, List<AdminApprovalModel> approvalList, OnApprovalClickListener listener) {
         this.context = context;
         this.approvalList = approvalList;
         this.listener = listener;
+
     }
 
     @NonNull
@@ -35,8 +37,9 @@ public class AdminApprovalAdapter extends RecyclerView.Adapter<AdminApprovalAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Log.d("AdapterDebug", "Approval list size in adapter: " + approvalList.size());
         AdminApprovalModel item = approvalList.get(position);
-        Log.d("RecyclerView", "Binding item: " + item.getUsername());
+
         holder.usernameTextView.setText(item.getUsername());
         holder.paymentAmountTextView.setText(item.getPaymentAmount());
         holder.expirationDateTextView.setText(item.getExpirationDate());
@@ -45,10 +48,12 @@ public class AdminApprovalAdapter extends RecyclerView.Adapter<AdminApprovalAdap
         holder.approveButton.setOnClickListener(v -> listener.onApproveClicked(item));
     }
 
+
     @Override
     public int getItemCount() {
         return approvalList.size();
     }
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView usernameTextView;
@@ -66,12 +71,7 @@ public class AdminApprovalAdapter extends RecyclerView.Adapter<AdminApprovalAdap
     }
 
     // Method to update the approval list
-    public void updateApprovalList(List<AdminApprovalModel> newList) {
-        approvalList.clear();
-        Log.d("PendingApprovals", "Approval Content: " + newList.size());
-        approvalList.addAll(newList);
-        notifyDataSetChanged();
-    }
+
 
     public interface OnApprovalClickListener {
         void onApproveClicked(AdminApprovalModel item);
