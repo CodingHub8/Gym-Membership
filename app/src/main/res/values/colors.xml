@@ -22,5 +22,6 @@
     <color name="colorOnBackground">#000000</color> <!-- Text color on background -->
     <color name="colorOnSurface">#000000</color>
     <color name="colorSuccess">#309932</color> <!-- Text color on surfaces -->
-
+    <color name="selected_item_background">#D3E0E9</color> <!-- Light blue color for background -->
+    <color name="selected_item_text_color">#003366</color> <!-- Dark blue color for text -->
 </resources>
