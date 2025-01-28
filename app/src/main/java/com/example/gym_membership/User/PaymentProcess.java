@@ -59,18 +59,36 @@ public class PaymentProcess extends AppCompatActivity {
             int day = calendar.get(Calendar.DAY_OF_MONTH);
             String todayDate = String.format("%04d-%02d-%02d", year, month, day);
 
+            // Determine membershipId and duration
             int membershipId;
-            if(membershipType.equals("Bronze")){
-                membershipId = 1;
-            }else if (membershipType.equals("Silver")){
-                membershipId = 2;
-            }else if (membershipType.equals("Gold")){
-                membershipId = 3;
-            } else {
-                membershipId = 0;
+            int durationDays; // Duration in days based on membershipType
+            switch (membershipType) {
+                case "Bronze":
+                    membershipId = 1;
+                    durationDays = 30;
+                    break;
+                case "Silver":
+                    membershipId = 2;
+                    durationDays = 60;
+                    break;
+                case "Gold":
+                    membershipId = 3;
+                    durationDays = 90;
+                    break;
+                default:
+                    membershipId = 0;
+                    durationDays = 0; // Invalid membershipType
+                    break;
             }
 
-            Payment payment = new Payment(username, "Complete", price, todayDate, userId);
+            // Calculate lastDate by adding the duration
+            calendar.add(Calendar.DAY_OF_YEAR, durationDays);
+            int lastYear = calendar.get(Calendar.YEAR);
+            int lastMonth = calendar.get(Calendar.MONTH) + 1; // Months are 0-based
+            int lastDay = calendar.get(Calendar.DAY_OF_MONTH);
+            String lastDate = String.format("%04d-%02d-%02d", lastYear, lastMonth, lastDay);
+
+            Payment payment = new Payment(username, "Complete", price, lastDate, userId);
 
             executorService.execute(() -> {
                 try {
