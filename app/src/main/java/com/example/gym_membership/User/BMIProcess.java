@@ -5,19 +5,28 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.DatePicker;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.gym_membership.Models.BMIHistory;
+import com.example.gym_membership.Adapters.BMIAdapter;
 import com.example.gym_membership.R;
 import com.example.gym_membership.databinding.UserActivityBmiBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class BMIProcess extends AppCompatActivity {
     private UserActivityBmiBinding binding;
+    private BMIAdapter bmiAdapter;
+    private List<BMIHistory> bmiHistoryList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,7 +39,14 @@ public class BMIProcess extends AppCompatActivity {
         bottomNav.setSelectedItemId(R.id.nav_bmi);
         new PageNavigator(this, bottomNav);
 
-        // Set up date picker
+        // Initialize the RecyclerView and Adapter
+        bmiHistoryList = new ArrayList<>(); // Initialize the list for BMI records
+        bmiAdapter = new BMIAdapter(bmiHistoryList); // Initialize the adapter with the empty list
+        RecyclerView recyclerView = findViewById(R.id.recycler_view); // Make sure this matches your layout's RecyclerView ID
+        recyclerView.setLayoutManager(new LinearLayoutManager(this)); // Set the layout manager
+        recyclerView.setAdapter(bmiAdapter); // Set the adapter
+
+        // Set up date picker for date input
         binding.etDate.setOnClickListener(v -> showDatePickerDialog());
 
         // Set up BMI calculation button
@@ -86,8 +102,21 @@ public class BMIProcess extends AppCompatActivity {
             // Display the BMI result
             binding.tvBmiResult.setText("Your BMI: " + bmiResult);
 
+            // Add new BMIHistory record to the list
+            BMIHistory newRecord = new BMIHistory(0, weight, height, bmi, dateStr, 1); // assuming userID is 1
+            bmiHistoryList.add(0, newRecord);  // Add to the top of the list
+
+            // Limit RecyclerView data to only 2 items
+            if (bmiHistoryList.size() > 2) {
+                bmiHistoryList = bmiHistoryList.subList(0, 2); // Keep only the first 2 items
+            }
+
+            // Notify the adapter that the new item is inserted
+            bmiAdapter.notifyDataSetChanged();
+
         } catch (NumberFormatException e) {
             Toast.makeText(this, "Invalid input format. Please enter numbers only.", Toast.LENGTH_SHORT).show();
         }
     }
+
 }
