@@ -23,7 +23,7 @@ public class Login extends AppCompatActivity {
         db = DBGymMembership.getInstance(this);
 
         binding.btnLogin.setOnClickListener(view -> {
-            String username = binding.etUsername.getText().toString();
+            String username = binding.username.getText().toString();
             String password = binding.etPassword.getText().toString();
             if(username.isEmpty() || password.isEmpty()){
                 Toast.makeText(getApplicationContext(), "Please fill in all credentials", Toast.LENGTH_SHORT).show();
@@ -31,11 +31,11 @@ public class Login extends AppCompatActivity {
                 Admin admin = db.adminDao().authenthicateAdmin(username.trim(), password.trim());
                 if(admin == null){
                     Toast.makeText(getApplicationContext(), "Invalid username or password!", Toast.LENGTH_SHORT).show();
-                    binding.etUsername.setText("");
+                    binding.username.setText("");
                     binding.etPassword.setText("");
                     return;
                 }else{
-                    Intent intent = new Intent(this, com.example.gym_membership.Admin.Home.class);
+                    Intent intent = new Intent(this, Home.class);
                     intent.putExtra("adminId", admin.getAdminID());
                     startActivity(intent);
                 }

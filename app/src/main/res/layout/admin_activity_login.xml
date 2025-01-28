@@ -36,7 +36,7 @@
         app:cardElevation="4dp">
 
         <EditText
-            android:id="@+id/etUsername"
+            android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_custom_background"

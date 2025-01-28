@@ -29,7 +29,7 @@ public class Login extends AppCompatActivity {
 
         intent = getIntent();
         if(intent.hasExtra("username") && intent.hasExtra("password")){
-            binding.etUsername.setText(intent.getStringExtra("username"));
+            binding.username.setText(intent.getStringExtra("username"));
             binding.etPassword.setText(intent.getStringExtra("password"));
         }
 
@@ -40,7 +40,7 @@ public class Login extends AppCompatActivity {
     }
 
     public void login(View view){
-        String username = binding.etUsername.getText().toString();
+        String username = binding.username.getText().toString();
         String password = binding.etPassword.getText().toString();
 
         if(username.isEmpty() || password.isEmpty()){
