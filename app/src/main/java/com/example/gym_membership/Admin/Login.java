@@ -14,6 +14,11 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = AdminActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        binding.btnLogin.setOnClickListener(view -> {
+            Intent intent = new Intent(this, com.example.gym_membership.Admin.Home.class);
+            startActivity(intent);
+        });
     }
 
     public void toUserPage(View view){
