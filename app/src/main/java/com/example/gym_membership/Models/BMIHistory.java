@@ -27,36 +27,11 @@ public class BMIHistory {
     public int userID;
 
 
-    public BMIHistory(int bmiID, double weight, double height, double bmi, String date, int userID) {
-        this.bmiID = bmiID;
+    public BMIHistory(double weight, double height, double bmi, String date, int userID) {
         this.weight = weight;
         this.height = height;
         this.bmi = bmi;
         this.date = date;
         this.userID = userID;
-    }
-
-    public int getId() {
-        return bmiID;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public double getHeight() {
-        return height;
-    }
-
-    public double getBmi() {
-        return bmi;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public int getUserID() {
-        return userID;
     }
 }

@@ -31,10 +31,10 @@ public class BMIAdapter extends RecyclerView.Adapter<BMIAdapter.BMIViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull BMIViewHolder holder, int position) {
         BMIHistory record = bmiHistoryList.get(position);
-        holder.tvDate.setText("Date: " + record.getDate());
-        holder.tvWeight.setText("Weight: " + record.getWeight() + " kg");
-        holder.tvHeight.setText("Height: " + record.getHeight() + " m");
-        holder.tvBmi.setText("BMI: " + String.format("%.2f", record.getBmi()));
+        holder.tvDate.setText("Date: " + record.date);
+        holder.tvWeight.setText("Weight: " + record.weight + " kg");
+        holder.tvHeight.setText("Height: " + record.height + " m");
+        holder.tvBmi.setText("BMI: " + String.format("%.2f", record.bmi));
     }
 
     @Override
