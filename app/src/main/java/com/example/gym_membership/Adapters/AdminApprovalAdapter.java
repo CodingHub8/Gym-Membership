@@ -19,13 +19,11 @@ public class AdminApprovalAdapter extends RecyclerView.Adapter<AdminApprovalAdap
     private final Context context;
     private final List<AdminApprovalModel> approvalList;
     private final OnApprovalClickListener listener;
-    RecyclerView holder;
 
     public AdminApprovalAdapter(Context context, List<AdminApprovalModel> approvalList, OnApprovalClickListener listener) {
         this.context = context;
         this.approvalList = approvalList;
         this.listener = listener;
-
     }
 
     @NonNull
@@ -37,7 +35,6 @@ public class AdminApprovalAdapter extends RecyclerView.Adapter<AdminApprovalAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Log.d("AdapterDebug", "Approval list size in adapter: " + approvalList.size());
         AdminApprovalModel item = approvalList.get(position);
 
         holder.usernameTextView.setText(item.getUsername());
@@ -48,12 +45,10 @@ public class AdminApprovalAdapter extends RecyclerView.Adapter<AdminApprovalAdap
         holder.approveButton.setOnClickListener(v -> listener.onApproveClicked(item));
     }
 
-
     @Override
     public int getItemCount() {
         return approvalList.size();
     }
-
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView usernameTextView;

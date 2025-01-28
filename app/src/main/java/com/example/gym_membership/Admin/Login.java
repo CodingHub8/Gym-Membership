@@ -36,7 +36,7 @@ public class Login extends AppCompatActivity {
                     return;
                 }else{
                     Intent intent = new Intent(this, Home.class);
-                    intent.putExtra("adminId", admin.getAdminID());
+                    intent.putExtra("adminId", admin.adminID);
                     startActivity(intent);
                 }
             }

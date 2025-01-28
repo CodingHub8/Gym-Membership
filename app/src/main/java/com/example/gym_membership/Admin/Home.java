@@ -59,9 +59,9 @@ public class Home extends AppCompatActivity {
         for (Payment payment : payments) {
             // Map Payment data to AdminApprovalModel
             AdminApprovalModel model = new AdminApprovalModel(
-                    payment.getUsername(),
-                    "$" + payment.getPaymentAmount(), // Format amount
-                    payment.getExpirationDate()
+                    payment.username,
+                    "$" + payment.paymentAmount, // Format amount
+                    payment.expirationDate
             );
             approvalList.add(model);
         }
@@ -91,5 +91,4 @@ public class Home extends AppCompatActivity {
         String message = "Approved membership for: " + item.getUsername();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
-
 }

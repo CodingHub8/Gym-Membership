@@ -17,16 +17,4 @@ public class Admin {
         this.username = username;
         this.password = password;
     }
-
-    public int getAdminID() {
-        return adminID;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
 }
