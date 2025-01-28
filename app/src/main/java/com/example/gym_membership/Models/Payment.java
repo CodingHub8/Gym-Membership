@@ -74,4 +74,8 @@ public class Payment {
     public void setUserID(int userID) {
         this.userID = userID;
     }
+
+    public String getUsername() {
+        return username;
+    }
 }
