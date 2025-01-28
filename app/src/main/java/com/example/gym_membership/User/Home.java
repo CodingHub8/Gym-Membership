@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.gym_membership.Adapters.*;
+import com.example.gym_membership.Database.DBGymMembership;
+import com.example.gym_membership.Models.User;
 import com.example.gym_membership.R;
 import com.example.gym_membership.databinding.UserActivityHomeBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -36,6 +38,7 @@ public class Home extends AppCompatActivity {
         new PageNavigator(this, bottomNav);
     }
 
+    @SuppressLint("SetTextI18n")
     private void setStatusText(){
         SharedPreferences sharedPref = getSharedPreferences("Gym_Membership", MODE_PRIVATE);
 
@@ -50,17 +53,33 @@ public class Home extends AppCompatActivity {
         binding.txtPhone.setText(phone);   // Set the phone
         binding.txtEmail.setText(email);   // Set the email
 
-        // Use membershipStatus as needed
-        if (membershipStatus.equals("Inactive")) {
+        // Get userId from SharedPreferences
+        SharedPreferences preferences = getSharedPreferences("Gym_Membership", MODE_PRIVATE);
+        int userId = preferences.getInt("userId", -1);
+
+        // Access database and user information
+        DBGymMembership db = DBGymMembership.getInstance(this);
+        User user = db.userDao().getUserById(userId);
+
+        // Update membership notification
+        if ("Inactive".equals(membershipStatus) || user.membershipStatus == null || user.membershipID == null) {
             binding.txtMembershipNotify.setText("You currently have no membership!");
-        } else if (membershipStatus.equals("Active")) {
-            int membershipID = sharedPref.getInt("membershipID", 0);
-            if (membershipID == 1) {
-                binding.txtMembershipNotify.setText("Bronze Membership Active");
-            } else if (membershipID == 2) {
-                binding.txtMembershipNotify.setText("Silver Membership Active");
-            } else if (membershipID == 3) {
-                binding.txtMembershipNotify.setText("Gold Membership Active");
+        } else if ("Pending".equals(user.membershipStatus)){
+            binding.txtMembershipNotify.setText("Your membership is pending approval");
+        }else if ("Active".equals(user.membershipStatus)){
+            int membershipID = user.membershipID;
+            switch (membershipID){
+                case 1:
+                    binding.txtMembershipNotify.setText("You currently have Bronze membership");
+                    break;
+                case 2:
+                    binding.txtMembershipNotify.setText("You currently have Silver membership");
+                    break;
+                case 3:
+                    binding.txtMembershipNotify.setText("You currently have Gold membership");
+                    break;
+                default:
+                    binding.txtMembershipNotify.setText("");
             }
         }
     }
