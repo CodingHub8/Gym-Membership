@@ -3,7 +3,6 @@ package com.example.gym_membership.User;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -77,5 +76,12 @@ public class Login extends AppCompatActivity {
     public void toSignupPage(View view){
         Intent intent = new Intent(this, Signup.class);
         startActivity(intent);
+    }
+
+    public void toAdminPage(View view){
+        Intent intent = new Intent(this, com.example.gym_membership.Admin.Login.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Reuse the existing instance if it's already at the top
+        startActivity(intent);
+        finish();
     }
 }
