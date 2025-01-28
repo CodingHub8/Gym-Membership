@@ -1,5 +1,6 @@
 package com.example.gym_membership.Models;
 
+import androidx.annotation.*;
 import androidx.room.*;
 
 @Entity(tableName = "PersonalTrainer",
@@ -20,10 +21,11 @@ public class PersonalTrainer {
     @ColumnInfo(name = "experience")
     public double experience; // in years
 
+    @Nullable
     @ColumnInfo(name = "userID")
     public int userID;
 
-    public PersonalTrainer(int trainerID, String trainerName, int trainerAge, double experience, int userID) {
+    public PersonalTrainer(int trainerID, String trainerName, int trainerAge, double experience, @Nullable int userID) {
         this.trainerID = trainerID;
         this.trainerName = trainerName;
         this.trainerAge = trainerAge;
