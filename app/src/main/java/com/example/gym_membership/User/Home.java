@@ -62,7 +62,7 @@ public class Home extends AppCompatActivity {
         User user = db.userDao().getUserById(userId);
 
         // Update membership notification
-        if ("Inactive".equals(membershipStatus) || user.membershipStatus == null || user.membershipID == null) {
+        if (user.membershipStatus == null || user.membershipID == null) {
             binding.txtMembershipNotify.setText("You currently have no membership!");
         } else if ("Pending".equals(user.membershipStatus)){
             binding.txtMembershipNotify.setText("Your membership is pending approval");

@@ -16,6 +16,7 @@ import com.example.gym_membership.Models.Payment;
 import com.example.gym_membership.Models.User;
 import com.example.gym_membership.databinding.UserActivityPaymentBinding;
 
+import java.util.Calendar;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -51,17 +52,39 @@ public class PaymentProcess extends AppCompatActivity {
         });
 
         binding.btnConfirmPayment.setOnClickListener(view -> {
-            Payment payment = new Payment(username, "Pending", price, "2025-12-31", userId);
+            // Set today's date using Calendar
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH) + 1; // Months are 0-based
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+            String todayDate = String.format("%04d-%02d-%02d", year, month, day);
+
+            int membershipId;
+            if(membershipType.equals("Bronze")){
+                membershipId = 1;
+            }else if (membershipType.equals("Silver")){
+                membershipId = 2;
+            }else if (membershipType.equals("Gold")){
+                membershipId = 3;
+            } else {
+                membershipId = 0;
+            }
+
+            Payment payment = new Payment(username, "Complete", price, todayDate, userId);
 
             executorService.execute(() -> {
                 try {
-//                    long result = db.paymentDao().insert(payment);
-                    long result = db.userDao().updateMembershipStatus(userId, "Active");
+                    long resultPay = db.paymentDao().insert(payment);
+                    long result = db.userDao().updateMembershipStatus(userId, membershipId, "Pending");
                     runOnUiThread(() -> {
-                        if (result > 0) {
-                            Toast.makeText(this, "Payment Successful", Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(this, "Registration Failed: Insert returned 0", Toast.LENGTH_SHORT).show();
+                        if (resultPay > 0) {
+                            if (result > 0) {
+                                Toast.makeText(this, "Payment Successful", Toast.LENGTH_LONG).show();
+                                intent = new Intent(this, Login.class);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(this, "Registration Failed: Insert returned 0", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     });
                 } catch (Exception e) {
