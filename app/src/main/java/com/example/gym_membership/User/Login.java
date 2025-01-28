@@ -63,6 +63,7 @@ public class Login extends AppCompatActivity {
                 // Save data in SharedPreferences
                 SharedPreferences preferences = getSharedPreferences("Gym_Membership", MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt("userId", user.userID);
                 editor.putString("username", user.username);
                 editor.putBoolean("isLoggedIn", true);
                 editor.apply();

@@ -26,8 +26,8 @@ public class Payment {
     @ColumnInfo(name = "userID")
     public int userID;
 
-    public Payment(int paymentID, String username, String paymentStatus, double paymentAmount, String expirationDate, int userID) {
-        this.paymentID = paymentID;
+    // Updated constructor without paymentID
+    public Payment(String username, String paymentStatus, double paymentAmount, String expirationDate, int userID) {
         this.username = username;
         this.paymentStatus = paymentStatus;
         this.paymentAmount = paymentAmount;
@@ -41,14 +41,6 @@ public class Payment {
 
     public void setPaymentID(int paymentID) {
         this.paymentID = paymentID;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPaymentStatus() {

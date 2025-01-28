@@ -45,17 +45,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
             // Navigate to another activity or fragment
             SharedPreferences preferences = context.getSharedPreferences("Gym_Membership", MODE_PRIVATE);
             String username = preferences.getString("username", "Guest");  // Default is "Guest"
+            int userId = preferences.getInt("userId", -1);
             boolean isLoggedIn = preferences.getBoolean("isLoggedIn", false);  // Default is false
 
             if(!username.equals("Guest") && isLoggedIn){
-                Intent intent = new Intent(context, PaymentProcess.class);
-
-                // Pass the membership data to the new activity via intent extras
-                intent.putExtra("username", username);
-                intent.putExtra("membershipType", cardModel.getMembershipType());
-                intent.putExtra("price", cardModel.getPrice());
-                intent.putExtra("duration", cardModel.getDuration());
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                // getIntent function
+                Intent intent = getIntent(userId, username, cardModel);
 
                 // Start the new activity
                 context.startActivity(intent);
@@ -67,6 +62,20 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
                 context.startActivity(intent);
             }
         });
+    }
+
+    @NonNull
+    private Intent getIntent(int userId, String username, CardModel cardModel) {
+        Intent intent = new Intent(context, PaymentProcess.class);
+
+        // Pass the membership data to the new activity via intent extras
+        intent.putExtra("userId", userId);
+        intent.putExtra("username", username);
+        intent.putExtra("membershipType", cardModel.getMembershipType());
+        intent.putExtra("price", cardModel.getPrice());
+        intent.putExtra("duration", cardModel.getDuration());
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        return intent;
     }
 
     @Override
