@@ -47,7 +47,7 @@ public class Signup extends AppCompatActivity {
             Toast.makeText(this, "Password does not match", Toast.LENGTH_SHORT).show();
         } else {
             // Create a User object for Room
-            User newUser = new User(username, rePassword, email, phone, null, "Inactive");
+            User newUser = new User(username, email, phone, rePassword, null, "Inactive");
 
             // Run the database on a background thread
             executorService.execute(() -> {

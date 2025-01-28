@@ -14,12 +14,15 @@ public interface UserDao {
     @Query("SELECT * FROM User WHERE userID = :id")
     User getUserById(int id);
 
-    @Query("SELECT * FROM User WHERE username = :username AND password = :password")
+    @Query("SELECT * FROM User WHERE username = :username COLLATE NOCASE AND password = :password")
     User getUserAuthentication(String username, String password);
 
     // Get all users
     @Query("SELECT * FROM User")
     List<User> getAllUsers();
+
+    @Query("UPDATE User SET membershipStatus = :membershipStatus WHERE userID = :userID")
+    int updateMembershipStatus(int userID, String membershipStatus);
 
     // Delete all users
     @Query("DELETE FROM User")
