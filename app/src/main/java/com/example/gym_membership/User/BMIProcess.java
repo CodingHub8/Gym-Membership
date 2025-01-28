@@ -95,6 +95,10 @@ public class BMIProcess extends AppCompatActivity {
                 return;
             }
 
+            if(height > 3){//if user inputs in cm
+                height /= 100;
+            }
+
             // Calculate BMI
             double bmi = weight / (height * height);
             String bmiResult = String.format("%.2f", bmi);

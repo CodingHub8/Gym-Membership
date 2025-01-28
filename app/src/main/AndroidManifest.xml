@@ -29,9 +29,6 @@
             android:name=".User.Home"
             android:exported="false" />
         <activity
-            android:name=".User.MembershipPurchase"
-            android:exported="false" />
-        <activity
             android:name=".User.PaymentProcess"
             android:exported="false"/>
         <activity

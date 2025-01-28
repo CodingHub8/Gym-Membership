@@ -2,6 +2,7 @@ package com.example.gym_membership.Adapters;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -45,21 +46,23 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
             // Navigate to another activity or fragment
             SharedPreferences preferences = context.getSharedPreferences("Gym_Membership", MODE_PRIVATE);
             String username = preferences.getString("username", "Guest");  // Default is "Guest"
-            int userId = preferences.getInt("userId", -1);
+            int userId = preferences.getInt("userId", 0);
             boolean isLoggedIn = preferences.getBoolean("isLoggedIn", false);  // Default is false
+
+            Intent intent;
 
             if(!username.equals("Guest") && isLoggedIn){
                 // getIntent function
-                Intent intent = getIntent(userId, username, cardModel);
-
-                // Start the new activity
-                context.startActivity(intent);
+                intent = getIntent(userId, username, cardModel);
             } else {
-                Intent intent = new Intent(context, Login.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent = new Intent(context, Login.class);
                 Toast.makeText(context, "You must log-in before making a purchase", Toast.LENGTH_SHORT).show();
-                // Start the new activity
-                context.startActivity(intent);
+            }
+            // Start the new activity
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Reuse the existing instance if it's already at the top
+            context.startActivity(intent);
+            if (context instanceof Activity) {
+                ((Activity) context).finish();  // Finish the current activity before navigating
             }
         });
     }

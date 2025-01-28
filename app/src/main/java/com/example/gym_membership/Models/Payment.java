@@ -1,5 +1,6 @@
 package com.example.gym_membership.Models;
 
+import androidx.annotation.Nullable;
 import androidx.room.*;
 
 @Entity(tableName = "Payment",
@@ -23,55 +24,16 @@ public class Payment {
     @ColumnInfo(name = "expirationDate")
     public String expirationDate;
 
+    @Nullable
     @ColumnInfo(name = "userID")
-    public int userID;
+    public Integer userID;
 
     // Updated constructor without paymentID
-    public Payment(String username, String paymentStatus, double paymentAmount, String expirationDate, int userID) {
+    public Payment(String username, String paymentStatus, double paymentAmount, String expirationDate, @Nullable Integer userID) {
         this.username = username;
         this.paymentStatus = paymentStatus;
         this.paymentAmount = paymentAmount;
         this.expirationDate = expirationDate;
-        this.userID = userID;
-    }
-
-    public int getPaymentID() {
-        return paymentID;
-    }
-
-    public void setPaymentID(int paymentID) {
-        this.paymentID = paymentID;
-    }
-
-    public String getPaymentStatus() {
-        return paymentStatus;
-    }
-
-    public void setPaymentStatus(String paymentStatus) {
-        this.paymentStatus = paymentStatus;
-    }
-
-    public double getPaymentAmount() {
-        return paymentAmount;
-    }
-
-    public void setPaymentAmount(double paymentAmount) {
-        this.paymentAmount = paymentAmount;
-    }
-
-    public String getExpirationDate() {
-        return expirationDate;
-    }
-
-    public void setExpirationDate(String expirationDate) {
-        this.expirationDate = expirationDate;
-    }
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public void setUserID(int userID) {
         this.userID = userID;
     }
 }

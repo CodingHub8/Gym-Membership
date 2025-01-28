@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.room.*;
+import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.gym_membership.Models.*;
@@ -12,7 +13,7 @@ import com.example.gym_membership.Interfaces.*;
 import java.util.concurrent.Executors;
 
 @Database(entities = {Admin.class, Membership.class, User.class, PersonalTrainer.class, Payment.class, BMIHistory.class},
-        version = 3)
+        version = 6)
 public abstract class DBGymMembership extends RoomDatabase {
     private static DBGymMembership instance;
 
@@ -48,6 +49,12 @@ public abstract class DBGymMembership extends RoomDatabase {
                     database.adminDao().insert(
                             new Admin("Admin1", "123"),
                             new Admin("Admin2", "123")
+                    );
+
+                    database.personalTrainerDao().insert(
+                            new PersonalTrainer("Trainer1", 30, 5.0, null),
+                            new PersonalTrainer("Trainer2", 35, 7.0, null),
+                            new PersonalTrainer("Trainer3", 40, 10.0, null)
                     );
                 }
             });

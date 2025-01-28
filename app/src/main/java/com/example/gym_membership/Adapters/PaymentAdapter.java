@@ -43,7 +43,7 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.PaymentV
     public void onBindViewHolder(@NonNull PaymentViewHolder holder, int position) {
         Payment payment = paymentList.get(position);
         holder.username.setText(payment.username);
-        holder.paymentAmount.setText(String.valueOf(payment.getPaymentAmount()));
+        holder.paymentAmount.setText(String.valueOf(payment.paymentAmount));
 
         // Optionally handle button click to approve and update expiration
         holder.approveButton.setOnClickListener(v -> {

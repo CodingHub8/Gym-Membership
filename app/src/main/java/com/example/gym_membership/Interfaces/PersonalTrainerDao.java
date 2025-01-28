@@ -9,7 +9,7 @@ import java.util.List;
 @Dao
 public interface PersonalTrainerDao {
     @Insert
-    void insert(PersonalTrainer trainer);
+    void insert(PersonalTrainer... trainer);
 
     @Query("SELECT * FROM PersonalTrainer WHERE trainerID = :trainerID")
     PersonalTrainer getTrainerById(int trainerID);

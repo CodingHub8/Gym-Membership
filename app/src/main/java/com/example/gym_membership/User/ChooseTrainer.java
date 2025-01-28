@@ -1,12 +1,9 @@
 package com.example.gym_membership.User;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
@@ -20,13 +17,13 @@ import com.example.gym_membership.databinding.UserActivityTrainerBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 public class ChooseTrainer extends AppCompatActivity {
     UserActivityTrainerBinding binding;
     private View selectedTrainerView = null;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,13 +53,13 @@ public class ChooseTrainer extends AppCompatActivity {
 
                     // Set trainer details
                     TextView nameText = trainerView.findViewById(R.id.tv_trainer_name);
-                    nameText.setText("Name: " + trainer.getTrainerName());
+                    nameText.setText("Name: " + trainer.trainerName);
 
                     TextView ageText = trainerView.findViewById(R.id.tv_trainer_age);
-                    ageText.setText("Age: " + trainer.getTrainerAge());
+                    ageText.setText("Age: " + trainer.trainerAge);
 
                     TextView experienceText = trainerView.findViewById(R.id.tv_trainer_experience);
-                    experienceText.setText("Experience: " + trainer.getExperience() + " years");
+                    experienceText.setText("Experience: " + trainer.experience + " years");
 
                     // Set an OnClickListener for trainer selection
                     trainerView.setOnClickListener(v -> {
@@ -94,6 +91,6 @@ public class ChooseTrainer extends AppCompatActivity {
         selectedTrainerView = trainerView;
 
         // Display a message (optional)
-        Toast.makeText(this, "Selected Trainer: " + trainer.getTrainerName(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Selected Trainer: " + trainer.trainerName, Toast.LENGTH_SHORT).show();
     }
 }

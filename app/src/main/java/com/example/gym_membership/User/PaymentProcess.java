@@ -12,11 +12,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gym_membership.Database.DBGymMembership;
 import com.example.gym_membership.Interfaces.UserDao;
+import com.example.gym_membership.Models.Membership;
 import com.example.gym_membership.Models.Payment;
 import com.example.gym_membership.Models.User;
 import com.example.gym_membership.databinding.UserActivityPaymentBinding;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -60,8 +62,11 @@ public class PaymentProcess extends AppCompatActivity {
             String todayDate = String.format("%04d-%02d-%02d", year, month, day);
 
             // Determine membershipId and duration
+            List<Membership> membershipList = db.membershipDao().getAllMemberships();
+
             int membershipId;
             int durationDays; // Duration in days based on membershipType
+
             switch (membershipType) {
                 case "Bronze":
                     membershipId = 1;
@@ -98,8 +103,10 @@ public class PaymentProcess extends AppCompatActivity {
                         if (resultPay > 0) {
                             if (result > 0) {
                                 Toast.makeText(this, "Payment Successful", Toast.LENGTH_LONG).show();
-                                intent = new Intent(this, Login.class);
+                                intent = new Intent(this, Home.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Reuse the existing instance if it's already at the top
                                 startActivity(intent);
+                                finish();
                             } else {
                                 Toast.makeText(this, "Registration Failed: Insert returned 0", Toast.LENGTH_SHORT).show();
                             }
