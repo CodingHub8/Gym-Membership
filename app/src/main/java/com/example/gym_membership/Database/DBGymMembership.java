@@ -44,6 +44,11 @@ public abstract class DBGymMembership extends RoomDatabase {
                             new Membership("Silver", 50.00, 60),
                             new Membership("Gold", 72.00, 90)
                     );
+
+                    database.adminDao().insert(
+                            new Admin("Admin1", "123"),
+                            new Admin("Admin2", "123")
+                    );
                 }
             });
         }

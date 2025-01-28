@@ -34,10 +34,10 @@ public class Login extends AppCompatActivity {
             binding.etPassword.setText(intent.getStringExtra("password"));
         }
 
-        List<User> users = db.userDao().getAllUsers();
-        for (User u : users) {
-            Log.d("DBCheck", "User: " + u.username + ", Password: " + u.password);
-        }
+//        List<User> users = db.userDao().getAllUsers();
+//        for (User u : users) {
+//            Log.d("DBCheck", "User: " + u.username + ", Password: " + u.password);
+//        }
     }
 
     public void login(View view){
@@ -54,17 +54,16 @@ public class Login extends AppCompatActivity {
 
                 // Do something with the data, such as navigating to another screen
                 Intent intent = new Intent(this, Home.class);
-                intent.putExtra("username", user.username);
-                intent.putExtra("phone", user.phone);
-                intent.putExtra("email", user.email);
-                intent.putExtra("membershipID", user.membershipID);
-                intent.putExtra("membershipStatus", user.membershipStatus);
 
                 // Save data in SharedPreferences
                 SharedPreferences preferences = getSharedPreferences("Gym_Membership", MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putInt("userId", user.userID);
                 editor.putString("username", user.username);
+                editor.putString("phone", user.phone);
+                editor.putString("email", user.email);
+                editor.putInt("membershipID", user.membershipID != null ? user.membershipID : 0);
+                editor.putString("membershipStatus", user.membershipStatus);
                 editor.putBoolean("isLoggedIn", true);
                 editor.apply();
 

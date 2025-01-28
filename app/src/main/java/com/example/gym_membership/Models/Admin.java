@@ -13,8 +13,7 @@ public class Admin {
     @ColumnInfo(name = "password")
     public String password;
 
-    public Admin(int adminID, String username, String password) {
-        this.adminID = adminID;
+    public Admin(String username, String password) {
         this.username = username;
         this.password = password;
     }

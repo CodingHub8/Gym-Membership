@@ -27,6 +27,7 @@ public class PaymentProcess extends AppCompatActivity {
     @SuppressLint("DefaultLocale")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        intent = getIntent();
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         binding = UserActivityPaymentBinding.inflate(getLayoutInflater());
